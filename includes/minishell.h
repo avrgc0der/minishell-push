@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 18:59:54 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:52:26 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <signal.h>
 
-# define PROMPT "TRASH >>  "
+# define PROMPT "TRASH >>"
 # define TRUE 1
 # define FALSE 0
 # define MAX_PATH 1024
 
-extern int	g_sig;
+typedef struct s_sig
+{
+	int		exit_status;
+}	t_sig;
+
+extern t_sig	g_sig;
 
 typedef struct s_exec
 {
@@ -185,7 +191,6 @@ int		handle_word(t_exec *exec, t_ast *node, char **envar);
 
 // ! function prototypes for execution (execve and builtins)
 int		exec_external(t_shell *shell, t_exec *exec, char **envs);
-int		exec_builtin(t_exec *exec, t_shell *shell);
 
 // ! function prototypes for execution (multiple commands)
 // Pipe execution helpers
@@ -205,6 +210,7 @@ void	close_all_pipes(t_exec *head, t_exec *current_cmd);
 
 // ! function prototypes for builtins
 int		is_builtin(char *cmd);
+int		exec_builtin(t_exec *exec, t_shell *shell);
 int		ft_cd(char **args, t_envs *envs);
 int		ft_echo(char **args);
 int		ft_exit(char **args, t_shell *shell);
@@ -215,5 +221,9 @@ int		ft_env(t_envs *envs);
 
 // ! debug functions prototypes and functions i haven't for use for yet
 void	debug_print_ast(t_ast *root);
+
+// ! function prototypes for signals
+void	handle_eof(char *line);
+void	signals_init(void);
 
 #endif

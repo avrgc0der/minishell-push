@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:53:32 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/05 18:18:05 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:21:33 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	ft_exit(char **args, t_shell *shell)
 	}
 	else
 		code = ft_atof(args[1]);
-		
 	destroy_shell(shell);
 	exit(normalize_exit_code(code));
 	return (TRUE);

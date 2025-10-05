@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:31:26 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/05 19:00:42 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:15:08 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 // *	env_malloc
 // *	split_var
 // *	env_search
-// *	print_env
+// *	ft_env
 
 /// @brief Mallocs and copies to_copy string until len
 /// @param to_copy string to malloc and dup

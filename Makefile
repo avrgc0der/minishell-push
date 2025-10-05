@@ -28,11 +28,11 @@ utils/ft_splitms.c \
 utils/init.c \
 utils/tree.c \
 utils/frees.c \
+utils/signals.c \
 utils/exec_frees.c \
 utils/env_frees.c \
 utils/parsing_errors.c \
 utils/execution_errors.c \
-utils/debug.c
 
 OBJECTS = $(CFILES:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiple_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:41:09 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 20:13:12 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/05 21:30:29 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ pid_t	fork_and_exec(t_shell *shell, t_exec *exec)
 	{
 		setup_child_fds(exec);
 		close_all_exec_fds(shell->exec);
-		exit(exec_external(shell, exec, shell->envps->envs));
+		if (is_builtin(exec->cmd))
+			exit(exec_builtin(exec, shell));
+		else
+			exit(exec_external(shell, exec, shell->envps->envs));
 	}
 	return (pid);
 }

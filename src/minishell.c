@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 18:28:58 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:53:28 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_input(void)
 			str = readline("");
 		if (!str)
 		{
-			ft_dprintf(2, "input failed\n"); // * signal here
+			handle_eof(str);
 			return (NULL);
 		}
 		replace_whitespaces(str);
@@ -84,9 +84,11 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+	g_sig.exit_status = 0;
 	shell = create_shell(envp);
 	if (!shell)
 		exit(1);
+	signals_init();
 	main_loop(shell);
 	destroy_shell(shell);
 	exit(0);

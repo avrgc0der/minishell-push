@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_frees.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 16:21:22 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 11:11:12 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:10:01 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:43:52 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 14:53:19 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:09:56 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

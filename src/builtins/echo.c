@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 17:46:44 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/05 17:43:36 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:15:36 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	n_flag_check(char *arg)
 int	ft_echo(char **args)
 {
 	int	i;
-	int n_flag;
+	int	n_flag;
 
 	i = 0;
 	n_flag = 0;

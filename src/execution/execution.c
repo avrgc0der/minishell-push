@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 20:35:20 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 02:12:35 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,25 @@ int	run_multiple(t_shell *shell)
 	return (wait_and_cleanup(pids, count));
 }
 
+// static int	run_single(t_shell *shell)
+// {
+// 	pid_t	pid;
+// 	int		status;
+
+// 	pid = fork();
+// 	if (pid < 0)
+// 	{
+// 		perror("TRASH");
+// 		return (1);
+// 	}
+// 	if (pid == 0)
+// 		exit(exec_external(shell, shell->exec, shell->envps->envs));
+// 	waitpid(pid, &status, 0);
+// 	if (WIFEXITED(status))
+// 		shell->exit_status = WEXITSTATUS(status);
+// 	return (shell->exit_status);
+// }
+
 static int	run_single(t_shell *shell)
 {
 	pid_t	pid;
@@ -53,11 +72,28 @@ static int	run_single(t_shell *shell)
 		return (1);
 	}
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		exit(exec_external(shell, shell->exec, shell->envps->envs));
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		shell->exit_status = WEXITSTATUS(status);
-	return (shell->exit_status);
+	}
+	else
+	{
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status))
+		{
+			if (WTERMSIG(status) == SIGINT)
+				g_sig.exit_status = 130;
+			else if (WTERMSIG(status) == SIGQUIT)
+			{
+				ft_putstr_fd("Quit (core dumped)\n", 2);
+				g_sig.exit_status = 131;
+			}
+		}
+		else
+			g_sig.exit_status = WEXITSTATUS(status);
+	}
+	return (g_sig.exit_status);
 }
 
 int	execute(t_shell *shell)
@@ -74,45 +110,16 @@ int	execute(t_shell *shell)
 		free_all_exec(&shell->exec);
 		return (1);
 	}
-	// signal here
 	if (one_pass(shell, shell->exec, shell->ast, shell->envps->env) == FALSE)
 		return (one_pass_cleanup(shell));
 	if (two_pass(shell, shell->exec, shell->ast, shell->envps->env) == FALSE)
 		return (one_pass_cleanup(shell));
 	free_tree(&shell->ast);
 	if (shell->exec->next == NULL && is_builtin(shell->exec->cmd))
-	{
-		if (is_builtin(shell->exec->cmd))
-			exec_builtin(shell->exec, shell);
-		else
-			status = run_single(shell);
-	}
+		exec_builtin(shell->exec, shell);
+	else if (shell->exec->next == NULL)
+		status = run_single(shell);
 	else
 		status = run_multiple(shell);
 	return (status);
-}
-
-int	exec_builtin(t_exec *exec, t_shell *shell)
-{
-	char	*cmd;
-	
-	cmd = exec->cmd;
-	if (!cmd)
-		return (FALSE);
-	if (!ft_strcmp(cmd, "cd"))
-		return (ft_cd(exec->args, shell->envps));
-	else if (!ft_strcmp(cmd, "echo"))
-		return (ft_echo(exec->args + 1));
-	else if (!ft_strcmp(cmd, "pwd"))
-		return (ft_pwd());
-	else if (!ft_strcmp(cmd, "export"))
-		return (ft_export(shell->envps, exec->args + 1));
-	else if (!ft_strcmp(cmd, "unset"))
-		return (ft_unset(shell->envps, exec->args));
-	else if (!ft_strcmp(cmd, "exit"))
-		return (ft_exit(exec->args, shell));
-	else if (!ft_strcmp(cmd, "env"))
-		return (ft_env(shell->envps));
-	else
-		return (FALSE);
 }

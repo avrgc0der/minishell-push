@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:36:35 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/04 19:23:54 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 01:09:39 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_shell	*create_shell(char **envs)
 		if (new != NULL)
 			add_env(&shell->envps->env, new);
 	}
-	if (!shell_envs(shell->envps)) //change OLDPWD also here
+	if (!shell_envs(shell->envps))
 	{
 		destroy_shell(shell);
 		return (NULL);
