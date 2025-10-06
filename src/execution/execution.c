@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 02:12:35 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 10:48:53 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	execute(t_shell *shell)
 		return (one_pass_cleanup(shell));
 	free_tree(&shell->ast);
 	if (shell->exec->next == NULL && is_builtin(shell->exec->cmd))
-		exec_builtin(shell->exec, shell);
+		status = exec_builtin(shell->exec, shell);
 	else if (shell->exec->next == NULL)
 		status = run_single(shell);
 	else

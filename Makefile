@@ -41,10 +41,10 @@ LIBFT_LIB = $(LIBFT_PATH)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_PATH) -lft
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -I./includes
+CFLAGS = -Wall -Wextra -Werror -I./includes -I/opt/vagrant/embedded/include/
 CFLAGS += -g3
 
-LINKFLAGS = -lreadline -L/includes
+LINKFLAGS = -L/opt/vagrant/embedded/lib/ -lreadline
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
