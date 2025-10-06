@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 01:53:28 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:23:17 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 /// @brief Get the input string and parse it
 /// @return SUCCESS or FAILURE (1 or 0)
-static char	*get_input(void)
+static char	*get_input(t_shell *shell)
 {
 	char	*str;
 
@@ -30,7 +30,7 @@ static char	*get_input(void)
 			str = readline("");
 		if (!str)
 		{
-			handle_eof(str);
+			handle_eof(str, shell);
 			return (NULL);
 		}
 		replace_whitespaces(str);
@@ -61,7 +61,7 @@ static void	main_loop(t_shell *shell)
 			ft_dprintf(2, "environ's failed\n");
 			break ;
 		}
-		input = get_input();
+		input = get_input(shell);
 		if (!input)
 			break ;
 		if (shell->ast)
@@ -84,8 +84,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
-	g_sig.exit_status = 0;
 	shell = create_shell(envp);
+	g_sig.exit_status = 0;
 	if (!shell)
 		exit(1);
 	signals_init();
