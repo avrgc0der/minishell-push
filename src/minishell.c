@@ -88,8 +88,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	g_sig.exit_status = 0;
 	shell = create_shell(envp);
+	g_sig.exit_status = 0;
 	if (!shell)
 		exit(1);
 	signals_init();
