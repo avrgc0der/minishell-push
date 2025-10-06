@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:41:36 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 12:44:38 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 13:27:13 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 t_sig	g_sig;
 
-static void	sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
 	(void)sig;
-	g_sig.exit_status = 130;
-	write(STDOUT_FILENO, "\n", 1);
-	rl_replace_line("", 0);
 	rl_on_new_line();
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 1);
 	rl_redisplay();
 }
 

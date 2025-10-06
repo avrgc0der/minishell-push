@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 12:44:57 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 13:26:00 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 
-# define PROMPT "TRASH >>"
+# define PROMPT "TRASH >>  "
 # define TRUE 1
 # define FALSE 0
 # define MAX_PATH 1024
@@ -225,5 +225,6 @@ void	debug_print_ast(t_ast *root);
 // ! function prototypes for signals
 void	handle_eof(t_shell *shell);
 void	signals_init(void);
+void	sigint_handler(int sig);
 
 #endif

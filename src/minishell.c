@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 12:44:49 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 13:25:48 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ static char	*get_input(t_shell *shell)
 		free(trimmed);
 	}
 }
-
+int	ts_get_signal(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	return (0);
+}
 /// @brief Main while loop Minishell
 /// @param t_shell pointer
 /// @return Exit status
@@ -59,6 +64,7 @@ static void	main_loop(t_shell *shell)
 		rl_outstream = stdin;
 	while (1)
 	{
+		ts_get_signal();
 		envs_array(shell->envps, shell->envps->env);
 		if (!shell->envps->envs)
 		{
