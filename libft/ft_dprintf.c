@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:59:14 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/04/25 17:43:11 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:52:06 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static int	printf_test(int fd, va_list flags, const char *string, int i)
 		printed = ft_putchar_fd('%', fd);
 	if (printed == -1)
 		return (-1);
-	if (string[i] != 'x' || string[i] != 'X')
-		t += printed;
+	t += printed;
 	return (t);
 }
 
