@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:15:33 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/09/28 20:00:25 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:47:14 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	check_redirect(char *str)
 	int		i;
 
 	i = 0;
-	if (str[i] == str[i + 1])
+	if (str[i] == str[i + 1] && (str[i] == '<' || str[i] == '>'))
 		i += 2;
 	while (str[i] == ' ')
 		i++;
