@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:41:36 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 12:23:57 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:44:38 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,9 @@ void	signals_init(void)
 	signal(SIGQUIT, sigquit_handler);
 }
 
-void	handle_eof(char *line, t_shell *shell)
+void	handle_eof(t_shell *shell)
 {
-	if (!line)
-	{
-		write(STDOUT_FILENO, "exit\n", 5);
-		destroy_shell(shell);
-		exit(g_sig.exit_status);
-	}
+	write(STDOUT_FILENO, "exit\n", 5);
+	destroy_shell(shell);
+	exit(g_sig.exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 12:39:07 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:44:49 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*get_input(t_shell *shell)
 		else
 			str = readline("");
 		if (!str)
-			handle_eof(str, shell);
+			handle_eof(shell);
 		replace_whitespaces(str);
 		temp = str;
 		while (*temp == ' ')
