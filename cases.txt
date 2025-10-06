@@ -1,0 +1,10 @@
+heredoc in general is broken (without a command)
+redirection without a command
+""
+	- should say command not found
+''
+	- should say command not found
+>emad <invalidfile ls
+	- should create "emad" file
+
+
