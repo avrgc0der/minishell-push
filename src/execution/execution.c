@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 15:58:33 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:07:11 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,21 @@
 // *	run_single
 // *	run_multiple
 // *	execute
+
+static int	get_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 2);
+		return (130);
+	}
+	else if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quit: 3\n", 2);
+		return (131);
+	}
+	return (128 + sig);
+}
 
 int	run_multiple(t_shell *shell)
 {
@@ -32,7 +47,7 @@ int	run_multiple(t_shell *shell)
 	i = 0;
 	while (curr)
 	{
-		pids[i++] = fork_and_exec(shell, curr);
+		pids[i++] = fork_and_exec(shell, curr, pids);
 		if (pids[i - 1] < 0)
 			return (cleanup_pids(pids, 1));
 		curr = curr->next;
@@ -40,25 +55,6 @@ int	run_multiple(t_shell *shell)
 	close_all_exec_fds(shell->exec);
 	return (wait_and_cleanup(pids, count));
 }
-
-// static int	run_single(t_shell *shell)
-// {
-// 	pid_t	pid;
-// 	int		status;
-
-// 	pid = fork();
-// 	if (pid < 0)
-// 	{
-// 		perror("TRASH");
-// 		return (1);
-// 	}
-// 	if (pid == 0)
-// 		exit(exec_external(shell, shell->exec, shell->envps->envs));
-// 	waitpid(pid, &status, 0);
-// 	if (WIFEXITED(status))
-// 		shell->exit_status = WEXITSTATUS(status);
-// 	return (shell->exit_status);
-// }
 
 static int	run_single(t_shell *shell)
 {
@@ -81,19 +77,9 @@ static int	run_single(t_shell *shell)
 	{
 		waitpid(pid, &status, 0);
 		if (WIFSIGNALED(status))
-		{
-			if (WTERMSIG(status) == SIGINT)
-				g_sig.exit_status = 130;
-			else if (WTERMSIG(status) == SIGQUIT)
-			{
-				ft_putstr_fd("Quit (core dumped)\n", 2);
-				g_sig.exit_status = 131;
-			}
-		}
-		else
-			g_sig.exit_status = WEXITSTATUS(status);
+			return (get_signal(WTERMSIG(status)));
 	}
-	return (g_sig.exit_status);
+	return (WEXITSTATUS(status));
 }
 
 int	execute(t_shell *shell)

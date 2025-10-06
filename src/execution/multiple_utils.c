@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:41:09 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 21:30:29 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 17:03:10 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ int	count_commands(t_exec *exec)
 	return (count);
 }
 
-pid_t	fork_and_exec(t_shell *shell, t_exec *exec)
+pid_t	fork_and_exec(t_shell *shell, t_exec *exec, pid_t *pids)
 {
 	pid_t	pid;
+	int		exit_code;
 
 	pid = fork();
 	if (pid < 0)
@@ -44,12 +45,18 @@ pid_t	fork_and_exec(t_shell *shell, t_exec *exec)
 	}
 	if (pid == 0)
 	{
+		free_str((void *) pids);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		setup_child_fds(exec);
 		close_all_exec_fds(shell->exec);
 		if (is_builtin(exec->cmd))
-			exit(exec_builtin(exec, shell));
-		else
-			exit(exec_external(shell, exec, shell->envps->envs));
+		{
+			exit_code = exec_builtin(exec, shell);
+			destroy_shell(shell);
+			exit(exit_code);
+		}
+		exit(exec_external(shell, exec, shell->envps->envs));
 	}
 	return (pid);
 }

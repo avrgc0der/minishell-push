@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 12:44:57 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 17:20:52 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int		exec_external(t_shell *shell, t_exec *exec, char **envs);
 // ! function prototypes for execution (multiple commands)
 // Pipe execution helpers
 int		count_commands(t_exec *exec);
-pid_t	fork_and_exec(t_shell *shell, t_exec *exec);
+pid_t	fork_and_exec(t_shell *shell, t_exec *exec, pid_t *pids);
 void	setup_child_fds(t_exec *exec);
 void	close_all_exec_fds(t_exec *exec);
 int		wait_and_cleanup(pid_t *pids, int count);
@@ -219,11 +219,11 @@ int		ft_pwd(void);
 int		ft_unset(t_envs *envs, char **args);
 int		ft_env(t_envs *envs);
 
-// ! debug functions prototypes and functions i haven't for use for yet
-void	debug_print_ast(t_ast *root);
-
 // ! function prototypes for signals
 void	handle_eof(t_shell *shell);
 void	signals_init(void);
+
+// ! debug functions prototypes and functions i haven't for use for yet
+void debug_print_ast(t_ast *root);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 12:44:49 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 17:24:22 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	main_loop(t_shell *shell)
 		shell->ast = scaffold_ast(input, shell->envps);
 		if (!shell->ast)
 			break;
+		debug_print_ast(shell->ast); // Debugging line to print the AST
 		shell->envps->e_code = execute(shell);
 	}
 }
