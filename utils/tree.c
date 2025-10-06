@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 14:13:46 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/09/29 13:20:28 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:22:41 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,17 @@ static char	*get_word(char *str)
 	while (*str != '\0')
 	{
 		if (*str == '"')
+		{
 			str = ft_strchr(str + 1, '"');
+			if (!str)
+				return (NULL);
+		}
 		else if (*str == '\'')
+		{
 			str = ft_strchr(str + 1, '\'');
+			if (!str)
+				return (NULL);
+		}
 		else if (ft_strchr(" \t<>|", *str) != NULL)
 			return (str);
 		str++;
