@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 17:20:52 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:19:47 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,6 +224,6 @@ void	handle_eof(t_shell *shell);
 void	signals_init(void);
 
 // ! debug functions prototypes and functions i haven't for use for yet
-void debug_print_ast(t_ast *root);
+void	debug_print_ast(t_ast *root);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:11:42 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 14:46:51 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:17:45 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	handle_input(t_shell *shell, t_exec *exec, t_ast *node, t_env *env)
 		close(fd);
 		return (two_pass(shell, exec, node->left, env));
 	}
-	close(exec->in_fd);
+	check_close(exec->in_fd);
 	exec->in_fd = fd;
 	return (two_pass(shell, exec, node->left, env));
 }
