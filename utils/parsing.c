@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 18:27:05 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/03 16:56:41 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:20:59 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,13 @@ int	replace_whitespaces(char *str)
 	while (*str)
 	{
 		if (*str == '"' || *str == '\'')
+		{
 			str = ft_strchr(str + 1, *str);
+			if (!str)
+				return (FALSE);
+		}
 		else if (*str >= 8 && *str <= 13)
 			*str = ' ';
-		if (!str)
-			return (FALSE);
 		str++;
 	}
 	return (TRUE);

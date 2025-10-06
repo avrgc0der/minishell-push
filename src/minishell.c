@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 12:23:17 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:44:49 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// * get_input
-// * main_loop
-// * main
+// * contains
+// *	get_input
+// *	main_loop
+// *	main
 
 /// @brief Get the input string and parse it
 /// @return SUCCESS or FAILURE (1 or 0)
 static char	*get_input(t_shell *shell)
 {
 	char	*str;
+	char	*trimmed;
+	char	*temp;
 
 	while (1)
 	{
@@ -29,18 +32,19 @@ static char	*get_input(t_shell *shell)
 		else
 			str = readline("");
 		if (!str)
-		{
-			handle_eof(str, shell);
-			return (NULL);
-		}
+			handle_eof(shell);
 		replace_whitespaces(str);
-		while (*str == ' ')
-			str++;
-		str = ft_strdup(str);
-		if (!str)
+		temp = str;
+		while (*temp == ' ')
+			temp++;
+		trimmed = ft_strdup(temp);
+		free_str(str);
+		if (!trimmed)
 			return (NULL);
-		if ((add_history(str), 1) && ft_validate(str))
-			return (str);
+		add_history(trimmed);
+		if (ft_validate(trimmed))
+			return (trimmed);
+		free(trimmed);
 	}
 }
 
@@ -59,16 +63,16 @@ static void	main_loop(t_shell *shell)
 		if (!shell->envps->envs)
 		{
 			ft_dprintf(2, "environ's failed\n");
-			break ;
+			break;
 		}
 		input = get_input(shell);
 		if (!input)
-			break ;
+			break;
 		if (shell->ast)
 			free_tree(&shell->ast);
 		shell->ast = scaffold_ast(input, shell->envps);
 		if (!shell->ast)
-			break ;
+			break;
 		shell->envps->e_code = execute(shell);
 	}
 }
@@ -82,8 +86,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
 
-	(void) argc;
-	(void) argv;
+	(void)argc;
+	(void)argv;
 	shell = create_shell(envp);
 	g_sig.exit_status = 0;
 	if (!shell)

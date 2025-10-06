@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 20:18:17 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 01:22:50 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:20:49 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
