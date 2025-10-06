@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 10:19:20 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 12:52:18 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:56:39 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	printf_test(va_list flags, const char *string, int i, int *total)
 		printed = ft_putchar('%');
 	if (printed == -1)
 		return (-1);
-	*total += printed;
+	if (string[i] != 'x' && string[i] != 'X')
+		*total += printed;
 	return (0);
 }
 
