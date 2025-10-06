@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 01:52:26 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:24:08 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int		ft_env(t_envs *envs);
 void	debug_print_ast(t_ast *root);
 
 // ! function prototypes for signals
-void	handle_eof(char *line);
+void	handle_eof(char *line, t_shell *shell);
 void	signals_init(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 11:56:44 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 12:39:07 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 /// @brief Get the input string and parse it
 /// @return SUCCESS or FAILURE (1 or 0)
-static char	*get_input(void)
+static char	*get_input(t_shell *shell)
 {
 	char	*str;
 	char	*trimmed;
@@ -32,7 +32,7 @@ static char	*get_input(void)
 		else
 			str = readline("");
 		if (!str)
-			handle_eof(str); // this doesn't work?
+			handle_eof(str, shell);
 		replace_whitespaces(str);
 		temp = str;
 		while (*temp == ' ')
@@ -65,7 +65,7 @@ static void	main_loop(t_shell *shell)
 			ft_dprintf(2, "environ's failed\n");
 			break;
 		}
-		input = get_input();
+		input = get_input(shell);
 		if (!input)
 			break;
 		if (shell->ast)
