@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 20:18:17 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/07 15:42:31 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:40:20 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static int	valid_export_key(char *key)
 		return (FALSE);
 	i = 0;
 	if (!ft_isalpha(key[i]) && key[i] != '_')
-	{
-		printf("minishell: export: `%s': not a valid identifier\n", key);
 		return (FALSE);
-	}
 	i++;
 	while (key[i])
 	{
@@ -76,6 +73,11 @@ static int	export_args(char **args, t_envs *envs)
 			modify_env(envs->env, temp->key, temp->val);
 		else if (valid_export_key(temp->key))
 			env_create_var(&envs->env, temp->key, temp->val);
+		else
+		{
+			ft_dprintf(2, "minishell: export: `%s'", args[i]);
+			ft_dprintf(2, ": not a valid identifier\n");
+		}
 		env_free_node(temp);
 		i++;
 	}

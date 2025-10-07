@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:53:32 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 20:48:13 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:14:37 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,24 @@
 
 static int	ft_isnumeric_str(const char *str)
 {
-	int	i;
+	int			i;
+	long long	res;
 
-	if (!str || !*str)
-		return (EXIT_FAILURE);
-	if (str[0] == '+' || str[0] == '-')
-		str++;
 	i = 0;
+	if (!str || !*str)
+		return (FALSE);
+	if (str[i] == '+' || str[i] == '-')
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (EXIT_FAILURE);
+			return (FALSE);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	res = ft_atoll(str);
+	if ((str[0] == '-' && res == 0) || (str[0] != '-' && res == -1))
+		return (FALSE);
+	return (TRUE);
 }
 
 /// @brief Normalize exit code to 0–255 (bash behavior)
@@ -63,7 +67,7 @@ int	ft_exit(char **args, t_shell *shell)
 		return (EXIT_FAILURE);
 	}
 	else
-		code = ft_atof(args[1]);
+		code = ft_atoll(args[1]);
 	destroy_shell(shell);
 	exit(normalize_exit_code(code));
 	return (EXIT_SUCCESS);

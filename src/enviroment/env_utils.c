@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 23:59:07 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/07 15:19:43 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:18:03 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	change_shlvl(t_env **env)
 	}
 	nb = ft_atoi(tmp->val);
 	nb += 1;
+	if (nb < 0)
+		nb = 0;
 	str = ft_itoa(nb);
 	if (!str)
 		return (FALSE);

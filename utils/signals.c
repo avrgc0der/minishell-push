@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:41:36 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 13:27:13 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:04:02 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
