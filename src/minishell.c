@@ -6,13 +6,15 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 15:51:10 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:59:32 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // * contains
+// *	check_add_history
+// *	ts_get_signal
 // *	get_input
 // *	main_loop
 // *	main
@@ -21,6 +23,13 @@ static void	check_add_history(char *str)
 {
 	if (ft_strlen(str) > 0)
 		add_history(str);
+}
+
+static int	ts_get_signal(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	return (0);
 }
 
 /// @brief Get the input string and parse it
@@ -65,6 +74,7 @@ static void	main_loop(t_shell *shell)
 		rl_outstream = stdin;
 	while (1)
 	{
+		ts_get_signal();
 		envs_array(shell->envps, shell->envps->env);
 		if (!shell->envps->envs)
 		{

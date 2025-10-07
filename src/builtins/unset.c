@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/25 12:22:22 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/05 17:58:18 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:31:40 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_unset(t_envs *envs, char **args)
 	int		i;
 
 	if (!envs || !args)
-		return (FALSE);
+		return (EXIT_FAILURE);
 	i = 0;
 	while (args[i])
 	{
@@ -50,5 +50,5 @@ int	ft_unset(t_envs *envs, char **args)
 			delete_unset(&envs->env, tmp->key);
 		i++;
 	}
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }

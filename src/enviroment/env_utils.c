@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 23:59:07 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/09/28 19:42:20 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:18:03 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ int	modify_env(t_env *env, char *key_name, char *new_val)
 
 /// @brief searches for the SHLVL key name and increments it by 1
 /// @param env env list
-int	change_shlvl(t_env *env)
+int	change_shlvl(t_env **env)
 {
 	t_env	*tmp;
 	char	*str;
 	int		nb;
 
-	tmp = env_search(env, "SHLVL");
+	tmp = env_search(*env, "SHLVL");
 	if (!tmp)
 	{
 		if (!env_create_var(env, "SHLVL", "1"))
@@ -54,6 +54,8 @@ int	change_shlvl(t_env *env)
 	}
 	nb = ft_atoi(tmp->val);
 	nb += 1;
+	if (nb < 0)
+		nb = 0;
 	str = ft_itoa(nb);
 	if (!str)
 		return (FALSE);

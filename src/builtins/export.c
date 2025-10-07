@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 20:18:17 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 12:20:49 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:40:20 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ static int	valid_export_key(char *key)
 	int	i;
 
 	if (!key)
-		return (0);
+		return (FALSE);
 	i = 0;
 	if (!ft_isalpha(key[i]) && key[i] != '_')
-		return (0);
+		return (FALSE);
 	i++;
 	while (key[i])
 	{
 		if (!ft_isalnum(key[i]) && key[i] != '_')
-			return (0);
+			return (FALSE);
 		i++;
 	}
-	return (1);
+	return (TRUE);
 }
 
 static void	print_export(t_env **temp, int size)
@@ -72,11 +72,16 @@ static int	export_args(char **args, t_envs *envs)
 		if (env_search(envs->env, temp->key))
 			modify_env(envs->env, temp->key, temp->val);
 		else if (valid_export_key(temp->key))
-			env_create_var(envs->env, temp->key, temp->val);
+			env_create_var(&envs->env, temp->key, temp->val);
+		else
+		{
+			ft_dprintf(2, "minishell: export: `%s'", args[i]);
+			ft_dprintf(2, ": not a valid identifier\n");
+		}
 		env_free_node(temp);
 		i++;
 	}
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }
 
 static int	do_export(t_envs *envs, t_env **exp, t_env *new)
@@ -88,7 +93,7 @@ static int	do_export(t_envs *envs, t_env **exp, t_env *new)
 	size = env_size(envs->env);
 	exp = malloc(sizeof(t_env *) * size + 1);
 	if (!exp)
-		return (FALSE);
+		return (EXIT_FAILURE);
 	while (new)
 	{
 		exp[i++] = new;
@@ -96,7 +101,7 @@ static int	do_export(t_envs *envs, t_env **exp, t_env *new)
 	}
 	print_export(exp, size);
 	free(exp);
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }
 
 int	ft_export(t_envs *envs, char **args)

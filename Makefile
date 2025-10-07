@@ -33,6 +33,7 @@ utils/exec_frees.c \
 utils/env_frees.c \
 utils/parsing_errors.c \
 utils/execution_errors.c \
+utils/ft_atoll.c
 
 OBJECTS = $(CFILES:.c=.o)
 

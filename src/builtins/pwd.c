@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 16:33:43 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 01:15:27 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:49:39 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_pwd(void)
 	if (getcwd(str, MAX_PATH))
 	{
 		ft_putendl_fd(str, 1);
-		return (TRUE);
+		return (EXIT_SUCCESS);
 	}
 	else
-		return (FALSE);
+		return (EXIT_FAILURE);
 }

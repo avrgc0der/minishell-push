@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:36:35 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 01:09:39 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:21:41 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 static int	shell_envs(t_envs *envs)
 {
-	if (!change_shlvl(envs->env))
+	if (!change_shlvl(&envs->env))
 		return (FALSE);
 	return (TRUE);
 }

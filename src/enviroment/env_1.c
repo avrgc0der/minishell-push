@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/22 15:31:26 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 01:15:08 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:15:15 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 /// @param to_copy string to malloc and dup
 /// @param len length to copy until
 /// @return malloc'ed string
-int	env_create_var(t_env *env, char *key, char *val)
+int	env_create_var(t_env **env, char *key, char *val)
 {
 	t_env	*new;
 
@@ -35,7 +35,7 @@ int	env_create_var(t_env *env, char *key, char *val)
 		return (FALSE);
 	new->key = ft_strdup(key);
 	new->val = ft_strdup(val);
-	add_env(&env, new);
+	add_env(env, new);
 	return (TRUE);
 }
 
