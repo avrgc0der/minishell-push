@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:15:33 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 14:47:14 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:51:30 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,42 @@
 // *	check_pipe;
 // *	check_redirect;
 // *	ft_validate;
+
+static int	has_valid_filename(char *str, int i)
+{
+	int	j;
+
+	j = i;
+	while (str[j] && str[j] != ' ' && str[j] != '<'
+		&& str[j] != '>' && str[j] != '|')
+	{
+		skip_quotes(str, &j);
+		j += (str[j] != '\0');
+	}
+	return (j != i);
+}
+
+static int	check_redirect(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		skip_quotes(str, &i);
+		if (str[i] == '<' || str[i] == '>')
+		{
+			i += (str[i + 1] == str[i]) + 1;
+			while (str[i] == ' ')
+				i++;
+			if (!has_valid_filename(str, i))
+				return (FALSE);
+		}
+		else if (str[i])
+			i++;
+	}
+	return (TRUE);
+}
 
 /// @brief Validate the string for quotes
 /// @param str string to validate
@@ -55,35 +91,6 @@ static int	check_pipe(char *str)
 			while (str[i] == ' ')
 				i++;
 			if (str[i] == '\0' || str[i] == '|')
-				return (FALSE);
-		}
-		i++;
-	}
-	return (TRUE);
-}
-
-static int	check_redirect(char *str)
-{
-	int		i;
-
-	i = 0;
-	if (str[i] == str[i + 1] && (str[i] == '<' || str[i] == '>'))
-		i += 2;
-	while (str[i] == ' ')
-		i++;
-	if (str[i] == '\0')
-		return (FALSE);
-	while (str[i])
-	{
-		skip_quotes(str, &i);
-		if (str[i] == '<' || str[i] == '>')
-		{
-			if (str[i + 1] == str[i])
-				i++;
-			i++;
-			while (str[i] == ' ')
-				i++;
-			if (ft_strchr("><&|", str[i]) || str[i] == '\0')
 				return (FALSE);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:51:05 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 18:17:02 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 19:58:13 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	one_pass(t_shell *shell, t_exec *exec, t_ast *node, t_env *envl)
 	if (node->value.type == HEREDOC)
 		if (handle_heredoc(shell, exec, node, shell->envps) == FALSE)
 			return (FALSE);
+	signals_init();
 	if (one_pass(shell, exec, node->left, envl) == FALSE)
 		return (FALSE);
 	if (node->value.type == PIPE)

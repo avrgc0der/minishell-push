@@ -2,7 +2,6 @@ NAME = minishell
 
 CFILES = src/minishell.c \
 src/validation.c \
-src/debug.c \
 src/builtins/builtin.c \
 src/builtins/cd.c \
 src/builtins/echo.c \

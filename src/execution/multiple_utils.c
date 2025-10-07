@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:41:09 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 17:03:10 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:13:10 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ pid_t	fork_and_exec(t_shell *shell, t_exec *exec, pid_t *pids)
 	pid_t	pid;
 	int		exit_code;
 
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -46,8 +47,7 @@ pid_t	fork_and_exec(t_shell *shell, t_exec *exec, pid_t *pids)
 	if (pid == 0)
 	{
 		free_str((void *) pids);
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		signals_default();
 		setup_child_fds(exec);
 		close_all_exec_fds(shell->exec);
 		if (is_builtin(exec->cmd))
@@ -104,6 +104,7 @@ int	wait_and_cleanup(pid_t *pids, int count)
 			last_status = 128 + WTERMSIG(status);
 		i++;
 	}
+	signals_init();
 	free(pids);
 	return (last_status);
 }

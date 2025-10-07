@@ -6,13 +6,14 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 18:07:11 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:13:17 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // * contains
+// *	get_signals
 // *	run_single
 // *	run_multiple
 // *	execute
@@ -61,6 +62,7 @@ static int	run_single(t_shell *shell)
 	pid_t	pid;
 	int		status;
 
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -69,8 +71,7 @@ static int	run_single(t_shell *shell)
 	}
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		signals_default();
 		exit(exec_external(shell, shell->exec, shell->envps->envs));
 	}
 	else
@@ -82,10 +83,24 @@ static int	run_single(t_shell *shell)
 	return (WEXITSTATUS(status));
 }
 
-int	execute(t_shell *shell)
+static int	run_command(t_shell *shell)
 {
 	int	status;
 
+	if (shell->exec->next == NULL && is_builtin(shell->exec->cmd))
+		status = exec_builtin(shell->exec, shell);
+	else if (shell->exec->next == NULL)
+	{
+		status = run_single(shell);
+		signals_init();
+	}
+	else
+		status = run_multiple(shell);
+	return (status);
+}
+
+int	execute(t_shell *shell)
+{
 	if (shell->exec)
 		free_all_exec(&shell->exec);
 	shell->exec = init_exec();
@@ -100,11 +115,5 @@ int	execute(t_shell *shell)
 	free_tree(&shell->ast);
 	if (shell->exec->cmd == NULL || shell->exec->args[0] == NULL)
 		return (one_pass_cleanup(shell));
-	if (shell->exec->next == NULL && is_builtin(shell->exec->cmd))
-		status = exec_builtin(shell->exec, shell);
-	else if (shell->exec->next == NULL)
-		status = run_single(shell);
-	else
-		status = run_multiple(shell);
-	return (status);
+	return (run_command(shell));
 }

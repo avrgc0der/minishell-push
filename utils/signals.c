@@ -6,13 +6,25 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 01:41:36 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 12:44:38 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:12:34 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// * contains
+// *	sigint_handler
+// *	sigquit_handler
+// *	signals_init
+// *	handle_eof
+
 t_sig	g_sig;
+
+void	signals_default(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
 static void	sigint_handler(int sig)
 {

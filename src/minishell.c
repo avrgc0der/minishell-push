@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 17:24:22 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:51:10 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 // *	get_input
 // *	main_loop
 // *	main
+
+static void	check_add_history(char *str)
+{
+	if (ft_strlen(str) > 0)
+		add_history(str);
+}
 
 /// @brief Get the input string and parse it
 /// @return SUCCESS or FAILURE (1 or 0)
@@ -41,10 +47,10 @@ static char	*get_input(t_shell *shell)
 		free_str(str);
 		if (!trimmed)
 			return (NULL);
-		add_history(trimmed);
+		check_add_history(trimmed);
 		if (ft_validate(trimmed))
 			return (trimmed);
-		free(trimmed);
+		free_str(trimmed);
 	}
 }
 
@@ -63,17 +69,16 @@ static void	main_loop(t_shell *shell)
 		if (!shell->envps->envs)
 		{
 			ft_dprintf(2, "environ's failed\n");
-			break;
+			break ;
 		}
 		input = get_input(shell);
 		if (!input)
-			break;
+			break ;
 		if (shell->ast)
 			free_tree(&shell->ast);
 		shell->ast = scaffold_ast(input, shell->envps);
 		if (!shell->ast)
-			break;
-		debug_print_ast(shell->ast); // Debugging line to print the AST
+			break ;
 		shell->envps->e_code = execute(shell);
 	}
 }
