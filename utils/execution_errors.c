@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:50:18 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 14:42:35 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:19:40 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	set_failure(t_exec *exec, char *error_msg)
 	return (FALSE);
 }
 
-int	one_pass_cleanup(t_shell *shell)
+int	cleanup_exec(t_shell *shell)
 {
 	if (shell->exec)
 	{

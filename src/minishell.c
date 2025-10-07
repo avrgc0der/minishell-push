@@ -3,19 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 19:41:10 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:59:32 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // * contains
+// *	check_add_history
+// *	ts_get_signal
 // *	get_input
 // *	main_loop
 // *	main
+
+static void	check_add_history(char *str)
+{
+	if (ft_strlen(str) > 0)
+		add_history(str);
+}
+
+static int	ts_get_signal(void)
+{
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	return (0);
+}
 
 /// @brief Get the input string and parse it
 /// @return SUCCESS or FAILURE (1 or 0)
@@ -41,18 +56,11 @@ static char	*get_input(t_shell *shell)
 		free_str(str);
 		if (!trimmed)
 			return (NULL);
-		add_history(trimmed);
+		check_add_history(trimmed);
 		if (ft_validate(trimmed))
 			return (trimmed);
-		free(trimmed);
+		free_str(trimmed);
 	}
-}
-
-int	ts_get_signal(void)
-{
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
-	return (0);
 }
 
 /// @brief Main while loop Minishell

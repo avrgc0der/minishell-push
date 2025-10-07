@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:35:33 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 15:02:31 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:01:18 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,22 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, t_ast *node, t_envs *envs)
 
 	if (pipe(fds) == -1)
 		return (set_failure(exec, "An unknown error has occurred\n"));
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
 		heredoc_child(fds, node->right->value.args[0], shell, envs);
+	}
 	waitpid(pid, &status, 0);
 	check_close(exec->in_fd);
 	exec->in_fd = fds[0];
 	close(fds[1]);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		exec->error = 1;
+		return (FALSE);
+	}
 	return (WEXITSTATUS(status) == 0);
 }
 

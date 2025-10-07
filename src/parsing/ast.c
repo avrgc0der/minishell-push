@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 13:49:27 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/03 20:38:29 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:30:21 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ int	expand_vars(t_ast *head, t_envs *envps)
 {
 	if (head == NULL)
 		return (TRUE);
-	if (head->value.type != WORD)
+	if (head->value.type != WORD && head->value.type != HEREDOC)
 		return (expand_vars(head->left, envps)
 			&& expand_vars(head->right, envps));
+	else if (head->value.type == HEREDOC)
+		return (expand_vars(head->left, envps));
 	head->value.cmd = loop_str(head->value.cmd, envps);
 	if (!head->value.cmd)
 		return (FALSE);

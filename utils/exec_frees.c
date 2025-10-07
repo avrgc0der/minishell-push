@@ -3,18 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec_frees.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 16:21:22 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 01:10:01 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:37:12 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // * contains
+// *	dupe_close
 // *	free_exec
 // *	free_all_exec
+
+void	dupe_close(int old_fd, int new_fd)
+{
+	dup2(old_fd, new_fd);
+	check_close(old_fd);
+}
 
 void	free_exec(t_exec *exec)
 {

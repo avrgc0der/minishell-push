@@ -6,20 +6,84 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:43:15 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 14:59:37 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:46:53 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // * contains
+// *	dupe_stds
+// *	restore_stds
 // *	dupe_close
 // *	exec_external
 
-static void	dupe_close(int old_fd, int new_fd)
+static void	dupe_stds(t_exec *exec, int *saved_stdin, int *saved_stdout)
 {
-	dup2(old_fd, new_fd);
-	check_close(old_fd);
+	if (exec->in_fd != -1)
+	{
+		*saved_stdin = dup(0);
+		dupe_close(exec->in_fd, 0);
+	}
+	if (exec->out_fd != -1)
+	{
+		*saved_stdout = dup(1);
+		dupe_close(exec->out_fd, 1);
+	}
+}
+
+static void	restore_stds(int *saved_stdin, int *saved_stdout)
+{
+	if (saved_stdin != NULL && *saved_stdin != -1)
+	{
+		dup2(*saved_stdin, 0);
+		close(*saved_stdin);
+	}
+	if (saved_stdout != NULL && *saved_stdout != -1)
+	{
+		dup2(*saved_stdout, 1);
+		close(*saved_stdout);
+	}
+}
+
+static int	compute_builtin(t_exec *exec, t_shell *shell)
+{
+	int	result;
+
+	result = 0;
+	if (!exec->cmd)
+		result = 1;
+	else if (!ft_strcmp(exec->cmd, "cd"))
+		result = ft_cd(exec->args, shell->envps);
+	else if (!ft_strcmp(exec->cmd, "echo"))
+		result = ft_echo(exec->args + 1);
+	else if (!ft_strcmp(exec->cmd, "pwd"))
+		result = ft_pwd();
+	else if (!ft_strcmp(exec->cmd, "export"))
+		result = ft_export(shell->envps, exec->args + 1);
+	else if (!ft_strcmp(exec->cmd, "unset"))
+		result = ft_unset(shell->envps, exec->args);
+	else if (!ft_strcmp(exec->cmd, "exit"))
+		result = ft_exit(exec->args, shell);
+	else if (!ft_strcmp(exec->cmd, "env"))
+		result = ft_env(shell->envps);
+	else
+		result = 1;
+	return (result);
+}
+
+int	exec_builtin(t_exec *exec, t_shell *shell)
+{
+	int		saved_stdin;
+	int		saved_stdout;
+	int		result;
+
+	saved_stdin = -1;
+	saved_stdout = -1;
+	dupe_stds(exec, &saved_stdin, &saved_stdout);
+	result = compute_builtin(exec, shell);
+	restore_stds(&saved_stdin, &saved_stdout);
+	return (result);
 }
 
 int	exec_external(t_shell *shell, t_exec *exec, char **envs)

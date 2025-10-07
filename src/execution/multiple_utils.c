@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 13:41:09 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 21:30:29 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:13:10 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,12 @@ int	count_commands(t_exec *exec)
 	return (count);
 }
 
-pid_t	fork_and_exec(t_shell *shell, t_exec *exec)
+pid_t	fork_and_exec(t_shell *shell, t_exec *exec, pid_t *pids)
 {
 	pid_t	pid;
+	int		exit_code;
 
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -44,12 +46,17 @@ pid_t	fork_and_exec(t_shell *shell, t_exec *exec)
 	}
 	if (pid == 0)
 	{
+		free_str((void *) pids);
+		signals_default();
 		setup_child_fds(exec);
 		close_all_exec_fds(shell->exec);
 		if (is_builtin(exec->cmd))
-			exit(exec_builtin(exec, shell));
-		else
-			exit(exec_external(shell, exec, shell->envps->envs));
+		{
+			exit_code = exec_builtin(exec, shell);
+			destroy_shell(shell);
+			exit(exit_code);
+		}
+		exit(exec_external(shell, exec, shell->envps->envs));
 	}
 	return (pid);
 }
@@ -97,6 +104,7 @@ int	wait_and_cleanup(pid_t *pids, int count)
 			last_status = 128 + WTERMSIG(status);
 		i++;
 	}
+	signals_init();
 	free(pids);
 	return (last_status);
 }

@@ -3,19 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 12:29:58 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 20:04:50 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 // * contains
+// *	get_signals
 // *	run_single
 // *	run_multiple
 // *	execute
+
+static int	get_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putstr_fd("\n", 2);
+		return (130);
+	}
+	else if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quit: 3\n", 2);
+		return (131);
+	}
+	return (128 + sig);
+}
 
 int	run_multiple(t_shell *shell)
 {
@@ -32,7 +48,7 @@ int	run_multiple(t_shell *shell)
 	i = 0;
 	while (curr)
 	{
-		pids[i++] = fork_and_exec(shell, curr);
+		pids[i++] = fork_and_exec(shell, curr, pids);
 		if (pids[i - 1] < 0)
 			return (cleanup_pids(pids, 1));
 		curr = curr->next;
@@ -41,30 +57,12 @@ int	run_multiple(t_shell *shell)
 	return (wait_and_cleanup(pids, count));
 }
 
-static void	sig_status(int pid, int *status)
-{
-	waitpid(pid, status, 0);
-	if (WIFSIGNALED(*status))
-	{
-		if (WTERMSIG(*status) == SIGINT)
-			g_sig.exit_status = 130;
-		else if (WTERMSIG(*status) == SIGQUIT)
-		{
-			ft_putstr_fd("Quit (core dumped)\n", 2);
-			g_sig.exit_status = 131;
-		}
-	}
-	else
-		g_sig.exit_status = WEXITSTATUS(*status);
-}
-
 static int	run_single(t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
 
 	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -73,39 +71,49 @@ static int	run_single(t_shell *shell)
 	}
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
+		signals_default();
 		exit(exec_external(shell, shell->exec, shell->envps->envs));
 	}
 	else
-		sig_status(pid, &status);
-	return (g_sig.exit_status);
+	{
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status))
+			return (get_signal(WTERMSIG(status)));
+	}
+	return (WEXITSTATUS(status));
+}
+
+static int	run_command(t_shell *shell)
+{
+	int	status;
+
+	if (shell->exec->next == NULL && is_builtin(shell->exec->cmd))
+		status = exec_builtin(shell->exec, shell);
+	else if (shell->exec->next == NULL)
+	{
+		status = run_single(shell);
+		signals_init();
+	}
+	else
+		status = run_multiple(shell);
+	return (status);
 }
 
 int	execute(t_shell *shell)
 {
-	int	status;
-
 	if (shell->exec)
 		free_all_exec(&shell->exec);
 	shell->exec = init_exec();
 	if (!shell->exec)
 		return (1);
 	if (set_path(shell->envps) == FALSE)
-	{
-		free_all_exec(&shell->exec);
-		return (1);
-	}
+		return (cleanup_exec(shell));
 	if (one_pass(shell, shell->exec, shell->ast, shell->envps->env) == FALSE)
-		return (one_pass_cleanup(shell));
+		return (cleanup_exec(shell));
 	if (two_pass(shell, shell->exec, shell->ast, shell->envps->env) == FALSE)
-		return (one_pass_cleanup(shell));
+		return (cleanup_exec(shell));
 	free_tree(&shell->ast);
-	if (shell->exec->next == NULL && is_builtin(shell->exec->cmd))
-		status = exec_builtin(shell->exec, shell);
-	else if (shell->exec->next == NULL)
-		status = run_single(shell);
-	else
-		status = run_multiple(shell);
-	return (status);
+	if (shell->exec->cmd == NULL || shell->exec->args[0] == NULL)
+		return (cleanup_exec(shell));
+	return (run_command(shell));
 }

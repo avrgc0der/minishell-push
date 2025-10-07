@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 19:45:44 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 20:10:08 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void		env_free_node(t_env *env);
 void		free_env(t_env *env);
 
 // ! function prototypes for execution frees
+void		dupe_close(int old_fd, int new_fd);
 void		free_exec(t_exec *exec);
 void		free_all_exec(t_exec **exec);
 
@@ -161,7 +162,7 @@ int			single_tree_error(void *ptr, char *error_message);
 int			double_tree_error(void *ptr1, void *ptr2, char *error_message);
 
 // ! function prototypes for execution errors
-int			one_pass_cleanup(t_shell *shell);
+int			cleanup_exec(t_shell *shell);
 int			set_failure(t_exec *exec, char *error_message);
 int			get_execve_error(char *cmd);
 
@@ -182,14 +183,14 @@ t_exec		*init_exec(void);
 int			execute(t_shell *shell);
 int			one_pass(t_shell *shell, t_exec *exec, t_ast *node, t_env *envl);
 int			two_pass(t_shell *shell, t_exec *exec, t_ast *node, t_env *envl);
-int			handle_heredoc(t_shell *shell, t_exec *exec,\
-	t_ast *node, t_envs *envs);
+int			handle_heredoc(t_shell *shell, t_exec *exec,
+				t_ast *node, t_envs *envs);
 int			handle_pipe(t_shell *shell, t_exec *exec, t_ast *node, t_env *envl);
 int			handle_input(t_shell *shell, t_exec *exec, t_ast *node, t_env *env);
-int			handle_append(t_shell *shell, t_exec *exec,\
-	t_ast *node, t_env *env);
-int			handle_truncate(t_shell *shell, t_exec *exec,\
-	t_ast *node, t_env *env);
+int			handle_append(t_shell *shell, t_exec *exec,
+				t_ast *node, t_env *env);
+int			handle_truncate(t_shell *shell, t_exec *exec,
+				t_ast *node, t_env *env);
 int			handle_word(t_exec *exec, t_ast *node, char **envar);
 
 // ! function prototypes for execution (execve and builtins)
@@ -198,7 +199,7 @@ int			exec_external(t_shell *shell, t_exec *exec, char **envs);
 // ! function prototypes for execution (multiple commands)
 // Pipe 	execution helpers
 int			count_commands(t_exec *exec);
-pid_t		fork_and_exec(t_shell *shell, t_exec *exec);
+pid_t		fork_and_exec(t_shell *shell, t_exec *exec, pid_t *pids);
 void		setup_child_fds(t_exec *exec);
 void		close_all_exec_fds(t_exec *exec);
 int			wait_and_cleanup(pid_t *pids, int count);
@@ -230,5 +231,6 @@ long long	ft_atoll(const char *str);
 void		handle_eof(t_shell *shell);
 void		signals_init(void);
 void		sigint_handler(int sig);
+void		signals_default(void);
 
 #endif

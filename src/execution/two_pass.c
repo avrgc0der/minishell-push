@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 17:11:42 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/05 14:39:38 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:17:45 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	handle_word(t_exec *exec, t_ast *node, char **envar)
 			exec->cmd = ft_strdup(exec->args[0]);
 		else
 			exec->cmd = get_path(exec->args[0], envar);
-	}
-	if (!exec->cmd)
-	{
-		perror("TRASH");
-		return (set_failure(exec, NULL));
+		if (!exec->cmd)
+		{
+			perror("TRASH");
+			return (set_failure(exec, NULL));
+		}
 	}
 	return (TRUE);
 }
@@ -91,7 +91,7 @@ int	handle_input(t_shell *shell, t_exec *exec, t_ast *node, t_env *env)
 		close(fd);
 		return (two_pass(shell, exec, node->left, env));
 	}
-	close(exec->in_fd);
+	check_close(exec->in_fd);
 	exec->in_fd = fd;
 	return (two_pass(shell, exec, node->left, env));
 }
