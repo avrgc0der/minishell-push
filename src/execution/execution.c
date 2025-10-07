@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 13:50:53 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 12:29:58 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,40 +41,21 @@ int	run_multiple(t_shell *shell)
 	return (wait_and_cleanup(pids, count));
 }
 
-// static int	run_single(t_shell *shell)
-// {
-// 	pid_t	pid;
-// 	int		status;
-
-// 	pid = fork();
-// 	if (pid < 0)
-// 	{
-// 		perror("TRASH");
-// 		return (1);
-// 	}
-// 	if (pid == 0)
-// 		exit(exec_external(shell, shell->exec, shell->envps->envs));
-// 	waitpid(pid, &status, 0);
-// 	if (WIFEXITED(status))
-// 		shell->exit_status = WEXITSTATUS(status);
-// 	return (shell->exit_status);
-// }
-
 static void	sig_status(int pid, int *status)
 {
 	waitpid(pid, status, 0);
-	if (WIFSIGNALED(status))
+	if (WIFSIGNALED(*status))
 	{
-		if (WTERMSIG(status) == SIGINT)
+		if (WTERMSIG(*status) == SIGINT)
 			g_sig.exit_status = 130;
-		else if (WTERMSIG(status) == SIGQUIT)
+		else if (WTERMSIG(*status) == SIGQUIT)
 		{
 			ft_putstr_fd("Quit (core dumped)\n", 2);
 			g_sig.exit_status = 131;
 		}
 	}
 	else
-		g_sig.exit_status = WEXITSTATUS(status);
+		g_sig.exit_status = WEXITSTATUS(*status);
 }
 
 static int	run_single(t_shell *shell)
@@ -82,7 +63,6 @@ static int	run_single(t_shell *shell)
 	pid_t	pid;
 	int		status;
 
-	// status = 0;
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pid = fork();

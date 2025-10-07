@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/03 17:48:11 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 01:19:02 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:43:41 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	exec_builtin(t_exec *exec, t_shell *shell)
 
 	cmd = exec->cmd;
 	if (!cmd)
-		return (FALSE);
+		return (EXIT_FAILURE);
 	if (!ft_strcmp(cmd, "cd"))
 		return (ft_cd(exec->args, shell->envps));
 	else if (!ft_strcmp(cmd, "echo"))
@@ -55,5 +55,5 @@ int	exec_builtin(t_exec *exec, t_shell *shell)
 	else if (!ft_strcmp(cmd, "env"))
 		return (ft_env(shell->envps));
 	else
-		return (FALSE);
+		return (EXIT_FAILURE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:15:33 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/09/28 20:00:25 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:42:44 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

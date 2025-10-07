@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:53:32 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 01:21:33 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:48:13 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ static int	ft_isnumeric_str(const char *str)
 	int	i;
 
 	if (!str || !*str)
-		return (FALSE);
+		return (EXIT_FAILURE);
 	if (str[0] == '+' || str[0] == '-')
 		str++;
 	i = 0;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (FALSE);
+			return (EXIT_FAILURE);
 		i++;
 	}
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }
 
 /// @brief Normalize exit code to 0–255 (bash behavior)
@@ -60,11 +60,11 @@ int	ft_exit(char **args, t_shell *shell)
 	else if (args[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-		return (FALSE);
+		return (EXIT_FAILURE);
 	}
 	else
 		code = ft_atof(args[1]);
 	destroy_shell(shell);
 	exit(normalize_exit_code(code));
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }

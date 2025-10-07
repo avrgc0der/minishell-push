@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi <enoshahi@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 13:26:00 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:20:56 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ typedef struct s_shell
 
 // ! function prototypes for enviroment variables
 t_env	*split_var(char *envp);
-int		env_create_var(t_env *env, char *key, char *val);
+int		env_create_var(t_env **env, char *key, char *val);
 void	add_env(t_env **env, t_env *new);
 t_env	*env_search(t_env *env, char *key_name);
 int		envs_array(t_envs *list_envs, t_env *env);
 int		modify_env(t_env *env, char *key_name, char *new_val);
 int		env_size(t_env *env);
-int		change_shlvl(t_env *env);
+int		change_shlvl(t_env **env);
 
 // ! function prototypes for validation
 int		ft_validate(char *str);

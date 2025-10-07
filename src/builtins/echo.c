@@ -6,7 +6,7 @@
 /*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/26 17:46:44 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/06 01:15:36 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/06 20:47:37 by enoshahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	ft_echo(char **args)
 	i = 0;
 	n_flag = 0;
 	if (!args)
-		return (FALSE);
-	if (n_flag_check(args[i]) == 1)
+		return (EXIT_FAILURE);
+	while (n_flag_check(args[i]) == 1)
 	{
 		n_flag = 1;
 		i++;
@@ -57,5 +57,5 @@ int	ft_echo(char **args)
 	}
 	if (n_flag == 0)
 		write(1, "\n", 1);
-	return (TRUE);
+	return (EXIT_SUCCESS);
 }
