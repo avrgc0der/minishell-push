@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:43:15 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 19:37:43 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:46:53 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int	compute_builtin(t_exec *exec, t_shell *shell)
 		result = 1;
 	return (result);
 }
+
 int	exec_builtin(t_exec *exec, t_shell *shell)
 {
 	int		saved_stdin;

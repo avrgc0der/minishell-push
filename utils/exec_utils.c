@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:43:52 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 19:30:40 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:47:21 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*append_access(char **env, char *command)
 {
 	char	*tmp;
 	char	*fullcmd;
-	int i;
+	int		i;
 
 	i = 0;
 	while (env[i])
@@ -55,7 +55,6 @@ char	*get_path(char *command, char **env)
 			if (!command)
 				return (NULL);
 			return (command);
-
 		}
 		command = append_access(env, command);
 	}
