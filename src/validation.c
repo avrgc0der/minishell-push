@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 17:15:33 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 15:51:30 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:03:34 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ static int	check_pipe(char *str)
 			if (str[i] == '\0' || str[i] == '|')
 				return (FALSE);
 		}
-		i++;
+		else if (str[i] != '\0') // Add bounds check here
+			i++;
 	}
 	return (TRUE);
 }

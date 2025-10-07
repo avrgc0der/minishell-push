@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 17:13:17 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:11:23 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,13 @@ int	execute(t_shell *shell)
 	if (!shell->exec)
 		return (1);
 	if (set_path(shell->envps) == FALSE)
-		return (one_pass_cleanup(shell));
+		return (cleanup_exec(shell));
 	if (one_pass(shell, shell->exec, shell->ast, shell->envps->env) == FALSE)
-		return (one_pass_cleanup(shell));
+		return (cleanup_exec(shell));
 	if (two_pass(shell, shell->exec, shell->ast, shell->envps->env) == FALSE)
-		return (one_pass_cleanup(shell));
+		return (cleanup_exec(shell));
 	free_tree(&shell->ast);
 	if (shell->exec->cmd == NULL || shell->exec->args[0] == NULL)
-		return (one_pass_cleanup(shell));
+		return (cleanup_exec(shell));
 	return (run_command(shell));
 }

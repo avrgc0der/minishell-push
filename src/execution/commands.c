@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 19:43:15 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 17:55:11 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:37:43 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,6 @@
 // *	restore_stds
 // *	dupe_close
 // *	exec_external
-
-static void	dupe_close(int old_fd, int new_fd)
-{
-	dup2(old_fd, new_fd);
-	check_close(old_fd);
-}
 
 static void	dupe_stds(t_exec *exec, int *saved_stdin, int *saved_stdout)
 {
@@ -52,13 +46,11 @@ static void	restore_stds(int *saved_stdin, int *saved_stdout)
 	}
 }
 
-int	exec_builtin(t_exec *exec, t_shell *shell)
+static int	compute_builtin(t_exec *exec, t_shell *shell)
 {
-	int		saved_stdin;
-	int		saved_stdout;
-	int		result;
+	int	result;
 
-	dupe_stds(exec, &saved_stdin, &saved_stdout);
+	result = 0;
 	if (!exec->cmd)
 		result = 1;
 	else if (!ft_strcmp(exec->cmd, "cd"))
@@ -77,6 +69,18 @@ int	exec_builtin(t_exec *exec, t_shell *shell)
 		result = ft_env(shell->envps);
 	else
 		result = 1;
+	return (result);
+}
+int	exec_builtin(t_exec *exec, t_shell *shell)
+{
+	int		saved_stdin;
+	int		saved_stdout;
+	int		result;
+
+	saved_stdin = -1;
+	saved_stdout = -1;
+	dupe_stds(exec, &saved_stdin, &saved_stdout);
+	result = compute_builtin(exec, shell);
 	restore_stds(&saved_stdin, &saved_stdout);
 	return (result);
 }

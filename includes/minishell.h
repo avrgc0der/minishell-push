@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 17:55:34 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:37:24 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void	env_free_node(t_env *env);
 void	free_env(t_env *env);
 
 // ! function prototypes for execution frees
+void	dupe_close(int old_fd, int new_fd);
 void	free_exec(t_exec *exec);
 void	free_all_exec(t_exec **exec);
 
@@ -161,7 +162,7 @@ int		single_tree_error(void *ptr, char *error_message);
 int		double_tree_error(void *ptr1, void *ptr2, char *error_message);
 
 // ! function prototypes for execution errors
-int		one_pass_cleanup(t_shell *shell);
+int		cleanup_exec(t_shell *shell);
 int		set_failure(t_exec *exec, char *error_message);
 int		get_execve_error(char *cmd);
 

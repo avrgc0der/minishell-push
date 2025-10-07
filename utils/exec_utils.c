@@ -3,48 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:43:52 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 01:09:56 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/07 19:30:40 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // * contains
-// *	close_all_pipes
+// *	append_access
 // *	get_path
 // *	set_path
 // *	find_heredoc
 // *	check_close
 
-char	*get_path(char *command, char **env)
+char	*append_access(char **env, char *command)
 {
 	char	*tmp;
 	char	*fullcmd;
-	int		i;
+	int i;
 
 	i = 0;
-	if (env && command)
+	while (env[i])
 	{
-		while (env[i])
-		{
-			tmp = ft_strjoin(env[i++], "/");
-			if (!tmp)
-				return (NULL);
-			fullcmd = ft_strappend(tmp, command);
-			if (!fullcmd)
-				return (NULL);
-			if (access(fullcmd, F_OK | X_OK) == 0)
-				return (fullcmd);
-			free(fullcmd);
-			fullcmd = NULL;
-		}
+		tmp = ft_strjoin(env[i++], "/");
+		if (!tmp)
+			return (NULL);
+		fullcmd = ft_strappend(tmp, command);
+		if (!fullcmd)
+			return (NULL);
+		if (access(fullcmd, F_OK | X_OK) == 0)
+			return (fullcmd);
+		free(fullcmd);
+		fullcmd = NULL;
 	}
 	command = ft_strdup(command);
 	if (!command)
 		return (NULL);
+	return (command);
+}
+
+char	*get_path(char *command, char **env)
+{
+	if (env && command)
+	{
+		if (ft_strlen(command) == 0)
+		{
+			command = ft_strdup("");
+			if (!command)
+				return (NULL);
+			return (command);
+
+		}
+		command = append_access(env, command);
+	}
 	return (command);
 }
 
