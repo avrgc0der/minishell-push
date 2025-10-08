@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:35:33 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/08 11:36:33 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:51:47 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	handle_heredoc(t_shell *shell, t_exec *exec, t_ast *node, t_envs *envs)
 		exec->error = 1;
 		return (FALSE);
 	}
-	return (WEXITSTATUS(status) == 0);
+	return (WIFEXITED(status) && WEXITSTATUS(status) == 0);
 }
 
 int	handle_pipe(t_shell *shell, t_exec *exec, t_ast *node, t_env *envl)

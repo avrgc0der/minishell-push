@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 11:41:28 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 20:04:50 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:53:39 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,14 @@ int	execute(t_shell *shell)
 		return (cleanup_exec(shell));
 	free_tree(&shell->ast);
 	if (shell->exec->cmd == NULL || shell->exec->args[0] == NULL)
+	{
+		if (shell->exec->error == 0)
+		{
+			free_all_exec(&shell->exec);
+			shell->exec = NULL;
+			return (0);
+		}
 		return (cleanup_exec(shell));
+	}
 	return (run_command(shell));
 }
