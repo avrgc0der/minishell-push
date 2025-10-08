@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 16:00:32 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 19:59:32 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:29:58 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,5 @@ int	main(int argc, char **argv, char **envp)
 	signals_init();
 	main_loop(shell);
 	destroy_shell(shell);
-	exit(0);
 	return (0);
 }

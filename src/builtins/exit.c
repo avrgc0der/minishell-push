@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:53:32 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/07 19:14:37 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:38:26 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	ft_isnumeric_str(const char *str)
 /// @brief Normalize exit code to 0–255 (bash behavior)
 /// @param n The number (can be >255 or <0)
 /// @return The normalized value in range 0–255
-int	normalize_exit_code(long long n)
+static int	normalize_exit_code(long long n)
 {
 	return ((unsigned char)(n % 256));
 }

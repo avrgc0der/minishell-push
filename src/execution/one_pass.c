@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 12:35:33 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 20:01:18 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:36:33 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	heredoc_child(int fds[2], char *end, t_shell *shell, t_envs *envs)
 			break ;
 		line = loop_str(line, envs);
 		if (!line)
+		{
 			ft_dprintf(2, "An unknown error has occurred\n");
+			break ;
+		}
 		ft_dprintf(fds[1], "%s\n", line);
 		free_str(line);
 	}

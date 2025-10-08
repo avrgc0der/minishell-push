@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 13:49:27 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/06 20:30:21 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/08 10:01:38 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	split_on_io(t_ast *head)
 	return (split_on_io(head->left) && split_on_io(head->left));
 }
 
-int	expand_vars(t_ast *head, t_envs *envps)
+static int	expand_vars(t_ast *head, t_envs *envps)
 {
 	if (head == NULL)
 		return (TRUE);

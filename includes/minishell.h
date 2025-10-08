@@ -6,7 +6,7 @@
 /*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 18:56:03 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 20:10:08 by mtangalv         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:33:54 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef struct s_envs
 {
 	int		e_code;	// * exit code
 	int		shlvl;	// * how many levels of shell your in
-	char	*cwd;	// * current working directory
-	char	*owd;	// * old working directory
 	char	**path;	// * all paths in $PATH
 	char	**envs;	// * our enviroment variables for execve
 	t_env	*env;	// * head for envs linked list
@@ -100,7 +98,6 @@ typedef struct s_ast
 // ! main struct for minishell
 typedef struct s_shell
 {
-	t_cmd	*cmd; // * main command executable
 	t_ast	*ast; // * abstract syntax tree for the input
 	t_envs	*envps; // * environment variables
 	t_exec	*exec; // * execution linked list

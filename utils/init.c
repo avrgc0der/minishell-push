@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 14:36:35 by mtangalv          #+#    #+#             */
-/*   Updated: 2025/10/07 15:21:41 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:35:24 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_shell	*create_shell(char **envs)
 	if (!shell->envps)
 	{
 		free(shell);
+		shell = NULL;
 		return (NULL);
 	}
 	while (*envs)

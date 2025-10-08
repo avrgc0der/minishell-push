@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enoshahi < enoshahi@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: mtangalv <mtangalv@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 00:11:11 by enoshahi          #+#    #+#             */
-/*   Updated: 2025/10/07 14:30:20 by enoshahi         ###   ########.fr       */
+/*   Updated: 2025/10/08 11:28:06 by mtangalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 /// @brief Gets the last node on the env
 /// @param lst list of envs
 /// @return last node in env
-t_env	*env_last(t_env *lst)
+static t_env	*env_last(t_env *lst)
 {
 	t_env	*node;
 
@@ -97,8 +97,8 @@ char	*env_join(t_env *env)
 }
 
 /// @brief convert linked list of envs to a array
-/// @param list_envs 
-/// @param env 
+/// @param list_envs
+/// @param env
 int	envs_array(t_envs *list_envs, t_env *env)
 {
 	t_env	*tmp;
